@@ -11,7 +11,6 @@ app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/attendance", require("./routes/attendanceRoutes"));
-app.use("/api/leaves", require("./routes/leaveRoutes"));
+app.use("/api/faculty", require("./routes/facultyRoutes"));
 
 app.listen(5000, () => console.log("Server running on port 5000"));
