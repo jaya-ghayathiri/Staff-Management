@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const facultyCtrl = require("../controllers/facultyController");
-const auth = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
-router.get("/courses", auth, facultyCtrl.getAssignedCourses);
-router.get("/timetable", auth, facultyCtrl.getTimetable);
-router.post("/attendance", auth, facultyCtrl.markAttendance);
-router.get("/leaves", auth, facultyCtrl.getLeaveStatus);
+router.get("/courses", protect, facultyCtrl.getAssignedCourses);
+router.get("/timetable", protect, facultyCtrl.getTimetable);
+router.post("/attendance", protect, facultyCtrl.markAttendance);
+router.get("/leaves", protect, facultyCtrl.getLeaveStatus);
+
 
 module.exports = router;
