@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const facultyCtrl = require("../controllers/facultyController");
-const auth = require("../middleware/auth");
+const auth = require("../middleware/authMiddleware");
 
 router.get("/courses", auth, facultyCtrl.getAssignedCourses);
 router.get("/timetable", auth, facultyCtrl.getTimetable);
