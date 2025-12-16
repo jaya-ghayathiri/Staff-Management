@@ -7,6 +7,6 @@ router.get("/courses", protect, facultyCtrl.getAssignedCourses);
 router.get("/timetable", protect, facultyCtrl.getTimetable);
 router.post("/attendance", protect, facultyCtrl.markAttendance);
 router.get("/leaves", protect, facultyCtrl.getLeaveStatus);
-
+router.get("/students/:courseId", protect, facultyCtrl.getStudentsByCourse);
 
 module.exports = router;
