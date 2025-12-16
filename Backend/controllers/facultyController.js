@@ -5,15 +5,24 @@ const Leave = require("../models/Leave");
 
 // Assigned courses
 exports.getAssignedCourses = async (req, res) => {
-  const courses = await Course.find({ faculty: req.user.id });
-  res.json(courses);
+  const courses = await Course.find({ faculty: req.user.id })
+  .populate("faculty", "name email");
+
 };
 
 // Timetable
 exports.getTimetable = async (req, res) => {
-  const timetable = await Timetable.find({ faculty: req.user.id });
-  res.json(timetable);
+  try {
+    const timetable = await Timetable.find({ faculty: req.user.id })
+      .populate("course", "name code")   // 👈 IMPORTANT
+      .populate("faculty", "name email");
+
+    res.json(timetable);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch timetable" });
+  }
 };
+
 
 // Mark attendance
 exports.markAttendance = async (req, res) => {
