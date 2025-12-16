@@ -5,16 +5,29 @@ const Leave = require("../models/Leave");
 
 // Assigned courses
 exports.getAssignedCourses = async (req, res) => {
-  const courses = await Course.find({ faculty: req.user.id })
-  .populate("faculty", "name email");
+  const courses = await Course.find({ faculty: req.user.id }).populate(
+    "faculty",
+    "name email"
+  );
+};
 
+exports.getStudentsByCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    const students = await Student.find({ course: courseId }).select("name");
+    res.json(students);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 };
 
 // Timetable
 exports.getTimetable = async (req, res) => {
   try {
     const timetable = await Timetable.find({ faculty: req.user.id })
-      .populate("course", "name code")   // 👈 IMPORTANT
+      .populate("course", "name code") // 👈 IMPORTANT
       .populate("faculty", "name email");
 
     res.json(timetable);
@@ -22,7 +35,6 @@ exports.getTimetable = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch timetable" });
   }
 };
-
 
 // Mark attendance
 exports.markAttendance = async (req, res) => {

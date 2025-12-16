@@ -85,17 +85,6 @@ exports.getAllStudents = async (req, res) => {
   res.json(students);
 };
 
-exports.getStudentsByCourse = async (req, res) => {
-  try {
-    const { courseId } = req.params;
-
-    const students = await Student.find({ course: courseId }).select("name");
-    res.json(students);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
 
 // Update student
 exports.updateStudent = async (req, res) => {
