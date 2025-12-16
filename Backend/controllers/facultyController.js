@@ -54,6 +54,29 @@ exports.markAttendance = async (req, res) => {
 };
 
 // Leave status
+// Request leave
+exports.requestLeave = async (req, res) => {
+  try {
+    const { reason, fromDate, toDate } = req.body;
+
+    if (!reason || !fromDate || !toDate) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const leave = await Leave.create({
+      faculty: req.user.id,
+      reason,
+      fromDate,
+      toDate,
+      status: "Pending",
+    });
+
+    res.status(201).json({ message: "Leave requested", leave });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to request leave" });
+  }
+};
+
 exports.getLeaveStatus = async (req, res) => {
   try {
     const leaves = await Leave.find({ faculty: req.user.id });
